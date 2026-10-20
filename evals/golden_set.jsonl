@@ -1,0 +1,9 @@
+{"id": "nach-01", "question": "How long does a destination bank have to accept or reject a NACH mandate registration?", "expected_source": "sample nach mandates", "expected_keywords": ["three working days"], "regulator": "NACH"}
+{"id": "nach-02", "question": "What is the return window for a presented NACH debit?", "expected_source": "sample nach mandates", "expected_keywords": ["one working day"], "regulator": "NACH"}
+{"id": "nach-03", "question": "Is a NACH mandate without an end date valid indefinitely?", "expected_source": "sample nach mandates", "expected_keywords": ["until cancelled"], "regulator": null}
+{"id": "rbi-01", "question": "What is the TAT for reversing a failed ATM cash withdrawal where the account was debited?", "expected_source": "sample rbi failed transactions", "expected_keywords": ["T+5"], "regulator": "RBI"}
+{"id": "rbi-02", "question": "What compensation is payable when an IMPS transfer debits the remitter but the beneficiary is not credited?", "expected_source": "sample rbi failed transactions", "expected_keywords": ["Rs 100", "T+1"], "regulator": "RBI"}
+{"id": "rbi-03", "question": "Which circular reference covers failed transaction TAT? SAMPLE/2024-25/001", "expected_source": "sample rbi failed transactions", "expected_keywords": ["SAMPLE/2024-25/001"], "regulator": null}
+{"id": "kyc-01", "question": "How often must KYC be updated for low risk customers?", "expected_source": "sample kyc master direction", "expected_keywords": ["ten years"], "regulator": "RBI"}
+{"id": "kyc-02", "question": "What does the video based customer identification process require?", "expected_source": "sample kyc master direction", "expected_keywords": ["live video", "geo"], "regulator": "RBI"}
+{"id": "oos-01", "question": "What is the interest rate on sample home loans this quarter?", "expected_source": null, "expected_keywords": [], "regulator": null, "expect_not_found": true}

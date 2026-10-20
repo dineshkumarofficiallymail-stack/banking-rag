@@ -1,0 +1,16 @@
+SAMPLE DOCUMENT FOR EVALUATION ONLY - synthetic text modelled on a KYC master direction. Not an actual regulation.
+
+1. Customer Due Diligence
+
+1.1 Officially Valid Documents
+For the purpose of this sample direction, officially valid documents include the passport, driving licence, proof of possession of Aadhaar number, voter identity card and job card issued by NREGA. Any one of these may be used to establish identity in the sample procedure.
+
+2. Periodic Updation
+
+2.1 Risk Based Updation
+Under this sample direction, KYC must be updated at least once in every two years for high risk customers, once in every eight years for medium risk customers and once in every ten years for low risk customers.
+
+3. Video Based Customer Identification Process
+
+3.1 V-CIP Requirements
+The sample V-CIP process requires a live video interaction with an authorised bank official, capture of a clear image of the customer, and geo-tagging to confirm the customer is physically present in India.

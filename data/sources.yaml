@@ -1,0 +1,19 @@
+# Public regulatory documents to download + ingest.
+# Copy exact PDF/HTML links from rbi.org.in (Notifications / Master Directions) and npci.org.in (NACH circulars).
+# `filename` is where the file lands under data/raw/. `regulator` must be RBI | NPCI | NACH | OTHER.
+sources:
+  - title: "RBI Master Direction - Know Your Customer (KYC) Direction, 2016"
+    regulator: RBI
+    doc_type: master_direction
+    url: "https://www.rbi.org.in/Scripts/BS_ViewMasDirections.aspx?id=11566"
+    filename: rbi_kyc_master_direction.html
+  - title: "RBI - Harmonisation of Turn Around Time (TAT) and customer compensation for failed transactions"
+    regulator: RBI
+    doc_type: circular
+    url: "https://www.rbi.org.in/Scripts/NotificationUser.aspx?Id=11693"
+    filename: rbi_failed_txn_tat_compensation.html
+  - title: "NPCI NACH - Procedural Guidelines"
+    regulator: NACH
+    doc_type: procedural_guidelines
+    url: "https://www.npci.org.in/what-we-do/nach/circulars"
+    filename: npci_nach_procedural_guidelines.html

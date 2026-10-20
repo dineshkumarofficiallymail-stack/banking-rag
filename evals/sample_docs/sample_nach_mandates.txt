@@ -1,0 +1,21 @@
+SAMPLE DOCUMENT FOR EVALUATION ONLY - synthetic text modelled on NACH procedural guidelines. Not an actual regulation.
+
+1. Scope
+
+This document describes the sample mandate lifecycle for the National Automated Clearing House (NACH) debit product used in evaluation of the retrieval system.
+
+2. Mandate Registration
+
+2.1 Mandate Validity
+A debit mandate registered through the sample NACH process remains valid until the end date specified by the customer or until it is cancelled. Where no end date is given, the sample mandate is treated as valid until cancelled by the customer.
+
+2.2 Mandate Acknowledgement Timeline
+In this sample procedure, the destination bank must accept or reject a mandate registration request within three working days of receipt. Rejections must carry a reason code from the sample reason-code list.
+
+3. Presentation and Returns
+
+3.1 Presentation Window
+Sponsor banks in this sample may present debit transactions on any NACH working day. Presentation files received after the sample cut-off are processed in the next session.
+
+3.2 Return Window
+A destination bank may return a presented debit within the sample return window of one working day after settlement, quoting reason codes such as insufficient funds or mandate not registered.

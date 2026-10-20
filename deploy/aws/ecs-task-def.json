@@ -1,0 +1,52 @@
+{
+  "family": "banking-rag",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "1024",
+  "memory": "2048",
+  "executionRoleArn": "arn:aws:iam::${AWS_ACCOUNT_ID}:role/banking-rag-execution-role",
+  "taskRoleArn": "arn:aws:iam::${AWS_ACCOUNT_ID}:role/banking-rag-task-role",
+  "runtimePlatform": { "operatingSystemFamily": "LINUX", "cpuArchitecture": "X86_64" },
+  "containerDefinitions": [
+    {
+      "name": "api",
+      "image": "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/banking-rag:${IMAGE_TAG}",
+      "essential": true,
+      "portMappings": [{ "containerPort": 8000, "protocol": "tcp" }],
+      "environment": [
+        { "name": "ENV", "value": "prod" },
+        { "name": "LOG_LEVEL", "value": "INFO" },
+        { "name": "ALLOW_REGISTRATION", "value": "false" },
+        { "name": "EMBEDDING_PROVIDER", "value": "fastembed" },
+        { "name": "EMBEDDING_MODEL", "value": "BAAI/bge-small-en-v1.5" },
+        { "name": "EMBEDDING_DIM", "value": "384" },
+        { "name": "FASTEMBED_CACHE_PATH", "value": "/app/.cache/fastembed" },
+        { "name": "LLM_MODEL", "value": "claude-sonnet-4-5" },
+        { "name": "RATE_LIMIT_PER_MINUTE", "value": "30" }
+      ],
+      "secrets": [
+        { "name": "DATABASE_URL", "valueFrom": "arn:aws:secretsmanager:${AWS_REGION}:${AWS_ACCOUNT_ID}:secret:banking-rag/DATABASE_URL" },
+        { "name": "REDIS_URL", "valueFrom": "arn:aws:secretsmanager:${AWS_REGION}:${AWS_ACCOUNT_ID}:secret:banking-rag/REDIS_URL" },
+        { "name": "JWT_SECRET", "valueFrom": "arn:aws:secretsmanager:${AWS_REGION}:${AWS_ACCOUNT_ID}:secret:banking-rag/JWT_SECRET" },
+        { "name": "ANTHROPIC_API_KEY", "valueFrom": "arn:aws:secretsmanager:${AWS_REGION}:${AWS_ACCOUNT_ID}:secret:banking-rag/ANTHROPIC_API_KEY" }
+      ],
+      "healthCheck": {
+        "command": ["CMD-SHELL", "curl -fsS http://localhost:8000/api/v1/health || exit 1"],
+        "interval": 30,
+        "timeout": 5,
+        "retries": 3,
+        "startPeriod": 90
+      },
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/banking-rag",
+          "awslogs-region": "${AWS_REGION}",
+          "awslogs-stream-prefix": "api",
+          "awslogs-create-group": "true"
+        }
+      },
+      "ulimits": [{ "name": "nofile", "softLimit": 65536, "hardLimit": 65536 }]
+    }
+  ]
+}

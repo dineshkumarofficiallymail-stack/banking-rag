@@ -1,0 +1,51 @@
+{
+  "ServiceName": "banking-rag",
+  "SourceConfiguration": {
+    "AuthenticationConfiguration": {
+      "AccessRoleArn": "arn:aws:iam::${AWS_ACCOUNT_ID}:role/service-role/AppRunnerECRAccessRole"
+    },
+    "AutoDeploymentsEnabled": true,
+    "ImageRepository": {
+      "ImageIdentifier": "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/banking-rag:${IMAGE_TAG}",
+      "ImageRepositoryType": "ECR",
+      "ImageConfiguration": {
+        "Port": "8000",
+        "RuntimeEnvironmentVariables": {
+          "ENV": "prod",
+          "LOG_LEVEL": "INFO",
+          "ALLOW_REGISTRATION": "false",
+          "EMBEDDING_PROVIDER": "fastembed",
+          "EMBEDDING_MODEL": "BAAI/bge-small-en-v1.5",
+          "EMBEDDING_DIM": "384",
+          "FASTEMBED_CACHE_PATH": "/app/.cache/fastembed",
+          "LLM_MODEL": "claude-sonnet-4-5"
+        },
+        "RuntimeEnvironmentSecrets": {
+          "DATABASE_URL": "arn:aws:secretsmanager:${AWS_REGION}:${AWS_ACCOUNT_ID}:secret:banking-rag/DATABASE_URL",
+          "REDIS_URL": "arn:aws:secretsmanager:${AWS_REGION}:${AWS_ACCOUNT_ID}:secret:banking-rag/REDIS_URL",
+          "JWT_SECRET": "arn:aws:secretsmanager:${AWS_REGION}:${AWS_ACCOUNT_ID}:secret:banking-rag/JWT_SECRET",
+          "ANTHROPIC_API_KEY": "arn:aws:secretsmanager:${AWS_REGION}:${AWS_ACCOUNT_ID}:secret:banking-rag/ANTHROPIC_API_KEY"
+        }
+      }
+    }
+  },
+  "InstanceConfiguration": {
+    "Cpu": "1 vCPU",
+    "Memory": "2 GB",
+    "InstanceRoleArn": "arn:aws:iam::${AWS_ACCOUNT_ID}:role/banking-rag-task-role"
+  },
+  "HealthCheckConfiguration": {
+    "Protocol": "HTTP",
+    "Path": "/api/v1/health",
+    "Interval": 10,
+    "Timeout": 5,
+    "HealthyThreshold": 1,
+    "UnhealthyThreshold": 5
+  },
+  "NetworkConfiguration": {
+    "EgressConfiguration": {
+      "EgressType": "VPC",
+      "VpcConnectorArn": "arn:aws:apprunner:${AWS_REGION}:${AWS_ACCOUNT_ID}:vpcconnector/banking-rag-vpc/1/${VPC_CONNECTOR_ID}"
+    }
+  }
+}

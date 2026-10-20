@@ -1,0 +1,29 @@
+[project]
+name = "banking-rag"
+version = "0.1.0"
+description = "Production-style RAG + tool-calling agent over RBI/NPCI/NACH regulatory documents"
+requires-python = ">=3.12"
+
+[tool.ruff]
+line-length = 130
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "ASYNC"]
+ignore = ["B008", "E501"]  # B008: FastAPI Depends() in defaults is idiomatic; E501: formatter owns code width, prompts may be long
+
+[tool.ruff.lint.per-file-ignores]
+"scripts/*" = ["ASYNC240"]  # small sync file reads in CLI entrypoints are fine
+"tests/*" = ["ASYNC240"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "session"
+asyncio_default_test_loop_scope = "session"
+testpaths = ["tests"]
+markers = ["integration: needs TEST_DATABASE_URL (pgvector Postgres)"]
+filterwarnings = ["ignore::DeprecationWarning"]
+
+[tool.mypy]
+python_version = "3.12"
+ignore_missing_imports = true

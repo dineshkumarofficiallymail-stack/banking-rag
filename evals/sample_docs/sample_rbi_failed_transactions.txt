@@ -1,0 +1,20 @@
+SAMPLE DOCUMENT FOR EVALUATION ONLY - synthetic text modelled on an RBI customer compensation circular. Not an actual regulation. Reference: SAMPLE/2024-25/001
+
+1. Purpose
+
+This sample circular harmonises the turn around time (TAT) for failed transactions and the compensation payable to customers across sample payment systems.
+
+2. Failed Transactions at ATMs
+
+2.1 Cash Not Dispensed
+Where a customer's account is debited but cash is not dispensed in this sample scenario, the issuing bank must reverse the transaction within T+5 working days. Beyond T+5, a sample compensation of Rs 100 per day of delay is payable to the customer without the customer having to raise a complaint.
+
+3. Failed IMPS and UPI Transactions
+
+3.1 Beneficiary Not Credited
+In the sample procedure, if the remitter's account is debited but the beneficiary's account is not credited, the remitter bank must auto-reverse the amount within T+1 working day. Compensation of Rs 100 per day applies if the reversal happens after T+1.
+
+4. Card Transactions
+
+4.1 Point of Sale
+For sample card-present transactions where the account is debited but confirmation is not received at the merchant, auto-reversal must be completed within T+5 working days with the same Rs 100 per day compensation beyond that.

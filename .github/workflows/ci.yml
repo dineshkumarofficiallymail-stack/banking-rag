@@ -1,0 +1,65 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+env:
+  PYTHON_VERSION: "3.12"
+  OFFLINE_MODE: "true"
+  JWT_SECRET: ci-only-secret-ci-only-secret-ci-only-secret
+  TEST_DATABASE_URL: postgresql+asyncpg://rag:rag@localhost:5432/banking_rag_test
+  DATABASE_URL: postgresql+asyncpg://rag:rag@localhost:5432/banking_rag_test
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: pgvector/pgvector:pg16
+        env:
+          POSTGRES_USER: rag
+          POSTGRES_PASSWORD: rag
+          POSTGRES_DB: banking_rag_test
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U rag -d banking_rag_test"
+          --health-interval 5s --health-timeout 5s --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+      - run: pip install -r requirements-dev.txt
+      - name: Lint
+        run: ruff check . && ruff format --check .
+      - name: Unit + integration tests
+        run: pytest -q --cov=app --cov-report=term-missing
+      - name: RAG eval gate (offline, synthetic corpus)
+        run: |
+          python -m scripts.init_db
+          python -m scripts.ingest --path evals/sample_docs/sample_nach_mandates.txt --regulator NACH --title "sample nach mandates"
+          python -m scripts.ingest --path evals/sample_docs/sample_rbi_failed_transactions.txt --regulator RBI --title "sample rbi failed transactions"
+          python -m scripts.ingest --path evals/sample_docs/sample_kyc_master_direction.txt --regulator RBI --title "sample kyc master direction"
+          python -m scripts.evaluate --golden evals/golden_set.jsonl --k 6 --out evals/report.json --min-hit-rate 0.8 --min-faithfulness 0.8
+      - uses: actions/upload-artifact@v4
+        with:
+          name: eval-report
+          path: evals/report.json
+
+  docker:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - name: Build image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: false
+          tags: banking-rag:${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
