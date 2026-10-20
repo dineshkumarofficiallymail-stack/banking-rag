@@ -1,5 +1,10 @@
 # Banking Regulatory RAG + Agent
 
+[![Live Demo & API Docs](https://img.shields.io/badge/Netlify-Live%20Demo%20%26%20Docs-00C7B7?logo=netlify&logoColor=white)](https://bankingregulatoryrag-agent.netlify.app/)
+[![CI](https://github.com/dineshkumarofficiallymail-stack/banking-rag/actions/workflows/ci.yml/badge.svg)](https://github.com/dineshkumarofficiallymail-stack/banking-rag/actions/workflows/ci.yml)
+
+🌐 **Live Documentation & Interactive API Explorer:** [https://bankingregulatoryrag-agent.netlify.app/](https://bankingregulatoryrag-agent.netlify.app/)
+
 Grounded question answering over public **RBI / NPCI / NACH** documents for bank operations staff, with
 source citations, hallucination and prompt-injection guardrails, a LangGraph tool-calling agent, JWT auth,
 Redis caching and rate limiting, a full audit trail, automated RAG evaluation and CI.
