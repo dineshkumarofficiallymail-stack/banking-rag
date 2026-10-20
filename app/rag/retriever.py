@@ -102,8 +102,8 @@ class HybridRetriever:
         results: list[RetrievedChunk] = []
         for cid, score in sorted(fused.items(), key=lambda kv: kv[1], reverse=True):
             chunk, doc, sim, kw = meta[cid]
-            # Similarity floor only applies to chunks found purely by vector similarity
-            if not kw and sim is not None and sim < self.settings.min_similarity:
+            # Similarity floor only applies to chunks found purely by vector similarity (in live mode)
+            if not kw and sim is not None and not self.settings.offline_mode and sim < self.settings.min_similarity:
                 continue
             results.append(
                 RetrievedChunk(
